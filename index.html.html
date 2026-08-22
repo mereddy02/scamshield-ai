@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ScamShield AI</title>
+<style>
+:root{--bg:#07111f;--card:#0d1b2d;--soft:#11243a;--text:#eaf3ff;--muted:#9eb2c9;--accent:#5eead4;--danger:#fb7185;--warn:#fbbf24;--safe:#4ade80}
+*{box-sizing:border-box} body{margin:0;font-family:Inter,Arial,sans-serif;background:linear-gradient(135deg,#06101d,#0b1730 60%,#082329);color:var(--text)}
+nav{display:flex;justify-content:space-between;align-items:center;padding:18px 7%;border-bottom:1px solid #1d324a;background:#07111fd9;position:sticky;top:0;backdrop-filter:blur(12px);z-index:3}
+.logo{font-weight:800;font-size:22px}.logo span{color:var(--accent)} .navbtn{background:var(--accent);color:#06201f;border:0;padding:10px 17px;border-radius:10px;font-weight:700}
+.hero{max-width:1100px;margin:auto;padding:80px 7% 40px;display:grid;grid-template-columns:1.2fr .8fr;gap:45px;align-items:center}
+.badge{display:inline-block;background:#123236;color:var(--accent);padding:8px 12px;border-radius:30px;font-size:13px}.hero h1{font-size:clamp(42px,7vw,74px);line-height:1.02;margin:18px 0}.hero h1 span{color:var(--accent)}.hero p{font-size:18px;color:var(--muted);line-height:1.7}
+.cta{margin-top:24px;padding:14px 22px;background:var(--accent);border:0;border-radius:12px;font-weight:800;font-size:16px;color:#06201f;cursor:pointer}
+.shield{height:300px;border-radius:30px;background:radial-gradient(circle,#16464a,#0d1b2d 62%);display:grid;place-items:center;border:1px solid #21404c;font-size:130px;box-shadow:0 20px 60px #0007}
+main{max-width:1100px;margin:auto;padding:25px 7% 70px}.section-title{text-align:center;font-size:30px;margin:25px 0 8px}.section-sub{text-align:center;color:var(--muted);margin-bottom:30px}
+.scanner{background:var(--card);padding:28px;border:1px solid #1e3651;border-radius:22px;box-shadow:0 15px 40px #0004}.tabs{display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap}.tab{background:var(--soft);color:var(--muted);border:1px solid #203b58;padding:9px 14px;border-radius:9px;cursor:pointer}.tab.active{color:var(--accent);border-color:var(--accent)}
+textarea{width:100%;height:170px;background:#081523;color:var(--text);border:1px solid #29435f;border-radius:13px;padding:16px;font-size:15px;resize:vertical}.scanrow{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-top:15px;flex-wrap:wrap}.scan{background:var(--accent);border:0;border-radius:10px;padding:12px 20px;font-weight:800;cursor:pointer}
+.result{display:none;margin-top:22px;padding:20px;border-radius:15px;background:#081523;border-left:5px solid var(--warn)}.score{font-size:30px;font-weight:800;color:var(--warn)}.result p{color:var(--muted);line-height:1.6}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:45px}.feature{background:var(--card);border:1px solid #1d3650;border-radius:18px;padding:22px}.feature .icon{font-size:32px}.feature h3{margin:13px 0 8px}.feature p{color:var(--muted);line-height:1.6}
+.examples{margin-top:55px;background:linear-gradient(110deg,#0d1b2d,#10283a);padding:30px;border-radius:22px;border:1px solid #214258}.example{display:inline-block;margin:8px;padding:10px 14px;background:#0a1625;border:1px solid #29445e;border-radius:9px;color:var(--muted);cursor:pointer}
+footer{text-align:center;padding:25px;color:var(--muted);border-top:1px solid #1b3047}
+@media(max-width:800px){.hero{grid-template-columns:1fr}.shield{height:220px}.grid{grid-template-columns:1fr}.hero{padding-top:50px}}
+</style>
+</head>
+<body>
+<nav><div class="logo">Scam<span>Shield</span> AI 🛡️</div><button class="navbtn" onclick="document.getElementById('scanner').scrollIntoView({behavior:'smooth'})">Scan Now</button></nav>
+
+<section class="hero">
+<div><div class="badge">🤖 AI-Powered Digital Safety</div><h1>Think Before You Click.<br><span>Scan Before You Trust.</span></h1><p>ScamShield AI analyzes suspicious messages, links and online content to identify scam patterns and explain the risk in simple language.</p><button class="cta" onclick="document.getElementById('scanner').scrollIntoView({behavior:'smooth'})">Try Scam Scanner →</button></div>
+<div class="shield">🛡️</div>
+</section>
+
+<main>
+<h2 class="section-title">AI Scam Scanner</h2>
+<p class="section-sub">Paste a suspicious message or link and get an instant risk assessment.</p>
+<section class="scanner" id="scanner">
+<div class="tabs"><button class="tab active">💬 Message</button><button class="tab">🔗 Link</button><button class="tab">📧 Email</button></div>
+<textarea id="input" placeholder="Example: Congratulations! You won ₹50,000. Click this link immediately to claim your reward..."></textarea>
+<div class="scanrow"><span style="color:var(--muted)">🔒 Your analysis is designed to be privacy-conscious.</span><button class="scan" onclick="analyze()">🛡️ Analyze with AI</button></div>
+<div class="result" id="result"><div class="score" id="score">Risk: --</div><h3 id="label"></h3><p id="reason"></p><strong>Recommended action:</strong> <span id="action"></span></div>
+</section>
+
+<div class="grid">
+<div class="feature"><div class="icon">🧠</div><h3>Smart Pattern Detection</h3><p>Checks urgency, impersonation, prize claims, payment requests and suspicious wording.</p></div>
+<div class="feature"><div class="icon">🔍</div><h3>Explainable AI</h3><p>Shows why content may be risky instead of only returning a score.</p></div>
+<div class="feature"><div class="icon">⚡</div><h3>Instant Safety Check</h3><p>Designed for quick, simple checks that anyone can understand.</p></div>
+</div>
+
+<section class="examples"><h2>Try a sample</h2>
+<button class="example" onclick="sample('Congratulations! You won ₹50,000. Click immediately and share your OTP to receive the prize.')">Prize + OTP scam</button>
+<button class="example" onclick="sample('Your bank account will be blocked today. Verify your password now using this link.')">Fake bank alert</button>
+<button class="example" onclick="sample('Hi, the meeting has been moved to 3 PM. Please check the official group for details.')">Normal message</button>
+</section>
+</main>
+<footer>© 2026 ScamShield AI · Hackathon Prototype · Stay Alert, Stay Safe 🛡️</footer>
+
+<script>
+function sample(t){document.getElementById('input').value=t;document.getElementById('scanner').scrollIntoView({behavior:'smooth'});}
+function analyze(){
+ const t=document.getElementById('input').value.toLowerCase();
+ const r=document.getElementById('result'); r.style.display='block';
+ let points=0, reasons=[];
+ const checks=[
+  [['otp','password','cvv','pin'],28,'requests sensitive credentials'],
+  [['won','winner','prize','reward','cash'],20,'uses an unexpected prize or reward claim'],
+  [['urgent','immediately','today','blocked','act now'],18,'creates urgency or fear'],
+  [['click','link','verify','http','www.'],15,'asks you to follow or trust a link'],
+  [['pay','payment','fee','₹','rs'],12,'mentions money or a payment request']
+ ];
+ checks.forEach(([words,p,msg])=>{if(words.some(w=>t.includes(w))){points+=p;reasons.push(msg)}});
+ points=Math.min(100,points);
+ let level=points>=60?'HIGH RISK':points>=30?'MEDIUM RISK':'LOW RISK';
+ document.getElementById('score').textContent=`Risk Score: ${points}/100`;
+ document.getElementById('label').textContent=level;
+ document.getElementById('reason').textContent=reasons.length?'ScamShield detected possible warning signs: '+reasons.join(', ')+'.':'No strong warning patterns were detected in this prototype scan. Always verify unexpected requests independently.';
+ document.getElementById('action').textContent=points>=60?'Do not click links or share information. Verify through an official source.':points>=30?'Pause and independently verify the sender before taking action.':'Stay cautious and verify unexpected requests.';
+ r.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+</script>
+</body></html>
